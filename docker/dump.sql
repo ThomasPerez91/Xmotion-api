@@ -1,0 +1,26 @@
+CREATE TABLE users (
+    user_id VARCHAR(255) PRIMARY KEY
+);
+
+CREATE TABLE posts (
+    post_id VARCHAR(255) PRIMARY KEY
+);
+
+CREATE TABLE emotions (
+    id SERIAL PRIMARY KEY,
+    user_id VARCHAR(255) REFERENCES users(user_id) ON DELETE CASCADE,
+    post_id VARCHAR(255) REFERENCES posts(post_id) ON DELETE CASCADE,
+    snapshot TEXT NOT NULL,
+    emotion VARCHAR(100),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE final_emotions (
+    id SERIAL PRIMARY KEY,
+    user_id VARCHAR(255) REFERENCES users(user_id) ON DELETE CASCADE,
+    post_id VARCHAR(255) REFERENCES posts(post_id) ON DELETE CASCADE,
+    emotion VARCHAR(100),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+)

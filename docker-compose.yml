@@ -1,0 +1,50 @@
+services:
+  api:
+    build:
+      context: .
+      dockerfile: docker/api.dockerfile
+    volumes:
+      - .:/app
+      - ./snapshots:/snapshots
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+    depends_on:
+      - redis
+      - postgres  # ✅ L'API dépend maintenant de PostgreSQL
+
+  worker:
+    build:
+      context: .
+      dockerfile: docker/worker.dockerfile
+    volumes:
+      - .:/app
+      - ./snapshots:/snapshots
+    env_file:
+      - .env
+    depends_on:
+      - redis
+      - postgres  # ✅ Le worker dépend aussi de PostgreSQL
+
+  redis:
+    image: redis:alpine
+    ports:
+      - "6379:6379"
+
+  postgres:
+    image: postgres:17
+    container_name: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./docker/dump.sql:/docker-entrypoint-initdb.d/dump.sql
+    ports:
+      - "5432:5432"
+
+volumes:
+  postgres_data:
