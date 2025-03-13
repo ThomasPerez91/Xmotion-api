@@ -3,11 +3,10 @@ import base64
 import json
 import redis  # type: ignore
 from celery import Celery  # type: ignore
-from sqlalchemy.orm import sessionmaker
-from sqlalchemy import create_engine, exists
-from sqlalchemy.exc import IntegrityError
-from sqlalchemy.orm.exc import NoResultFound
-from app.models import Emotion, Base, User, Post
+from sqlalchemy.orm import sessionmaker # type: ignore
+from sqlalchemy import create_engine, exists # type: ignore
+from sqlalchemy.exc import IntegrityError # type: ignore 
+from app.models import Emotion, User, Post
 
 # 🔥 Initialisation de Redis
 redis_client = redis.Redis(host="redis", port=6379, db=0)

@@ -1,5 +1,5 @@
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy import create_engine # type: ignore
+from sqlalchemy.orm import sessionmaker # type: ignore
 from app.core.config import DATABASE_URL
 
 # 🔗 Connexion PostgreSQL via SQLAlchemy
