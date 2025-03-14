@@ -5,4 +5,4 @@ router = APIRouter()
 
 @router.get("/")
 async def home():
-    return {"message": "Hello, World!"}
+    return {"message": "Emotion API !"}

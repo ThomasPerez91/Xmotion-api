@@ -5,13 +5,10 @@ from app.worker.tasks import process_snapshots
 
 router = APIRouter()
 
-# 📝 Définition du schéma attendu
-
-
 class SnapshotRequest(BaseModel):
     user_id: str
     post_id: str
-    snapshots: list[str]  # Liste des images en base64
+    snapshots: list[str]
 
 
 @router.post("/snapshots")
@@ -22,7 +19,6 @@ async def receive_snapshots(request: SnapshotRequest):
     if not request.snapshots:
         raise HTTPException(status_code=400, detail="Aucun snapshot fourni.")
 
-    # 📌 Lancer la tâche Celery
     task = process_snapshots.delay(
         str(request.user_id), str(request.post_id), request.snapshots)
 

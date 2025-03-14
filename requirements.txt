@@ -8,3 +8,9 @@ pydantic
 pillow
 sqlalchemy
 psycopg2-binary
+tensorflow
+deepface
+pillow
+numpy
+opencv-python-headless
+tf-keras
